@@ -17,7 +17,6 @@ const DraggableBlock: React.FC<DraggableBlockProps> = ({
   const parentRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Don't start dragging if clicking on interactive elements
     const target = e.target as HTMLElement;
     if (target.closest("button") || target.closest(".resize-handle")) {
       return;
@@ -50,11 +49,9 @@ const DraggableBlock: React.FC<DraggableBlockProps> = ({
     let newX = e.clientX - parentRect.left - dragOffset.x;
     let newY = e.clientY - parentRect.top - dragOffset.y;
 
-    // Apply grid snapping
     newX = Math.round(newX / grid[0]) * grid[0];
     newY = Math.round(newY / grid[1]) * grid[1];
 
-    // Apply bounds
     if (bounds === "parent") {
       const maxX = parentRect.width - blockRect.width;
       const maxY = parentRect.height - blockRect.height;

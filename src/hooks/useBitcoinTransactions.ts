@@ -25,7 +25,6 @@ export const useBitcoinTransactions = (
         } else if (message.x) {
           const transaction = parseBlockchainTransaction(data);
           if (transaction) {
-            // Update the query cache with new transaction
             queryClient.setQueryData<BitcoinTransaction[]>(
               ["bitcoin-transactions"],
               (oldData) => {
@@ -43,15 +42,9 @@ export const useBitcoinTransactions = (
     [queryClient, maxTransactions]
   );
 
-  const handleWebSocketOpen = useCallback(() => {
-    // Subscribe to unconfirmed transactions when connection opens
-    // This will be handled by the WebSocket connection hook
-  }, []);
+  const handleWebSocketOpen = useCallback(() => {}, []);
 
-  const handleWebSocketClose = useCallback(() => {
-    // Unsubscribe when connection closes
-    // This will be handled by the WebSocket connection hook
-  }, []);
+  const handleWebSocketClose = useCallback(() => {}, []);
 
   const { isConnected, connectionError, connect, disconnect } =
     useWebSocketConnection({
@@ -62,7 +55,6 @@ export const useBitcoinTransactions = (
       onClose: handleWebSocketClose,
     });
 
-  // Mutation for resetting transactions
   const resetTransactionsMutation = useMutation({
     mutationFn: () => {
       return Promise.resolve();
@@ -76,20 +68,18 @@ export const useBitcoinTransactions = (
     resetTransactionsMutation.mutate();
   }, [resetTransactionsMutation]);
 
-  // Query for transactions
   const {
     data: transactions = [],
     isLoading,
     error,
   } = useQuery<BitcoinTransaction[]>({
     queryKey: ["bitcoin-transactions"],
-    queryFn: () => [], // Initial empty array, data comes from WebSocket
-    enabled: false, // We don't want this to refetch automatically
-    staleTime: Infinity, // Keep data fresh since it's real-time
-    gcTime: 1000 * 60 * 30, // Keep in cache for 30 minutes
+    queryFn: () => [],
+    enabled: false,
+    staleTime: Infinity,
+    gcTime: 1000 * 60 * 30,
   });
 
-  // Calculate total sum using utility function
   const totalSum = calculateTotalSum(transactions);
 
   return {

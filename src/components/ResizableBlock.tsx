@@ -39,7 +39,6 @@ const ResizableBlock: React.FC<ResizableBlockProps> = ({
     let newWidth = startSize.width;
     let newHeight = startSize.height;
 
-    // Calculate new size based on which handle was grabbed
     if (deltaX !== 0) {
       newWidth = Math.max(
         minWidth,
