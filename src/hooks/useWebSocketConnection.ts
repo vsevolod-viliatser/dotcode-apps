@@ -19,7 +19,7 @@ export const useWebSocketConnection = (
 
   const connect = useCallback(() => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
-      return; // Already connected
+      return;
     }
 
     setConnectionError(null);
@@ -33,7 +33,6 @@ export const useWebSocketConnection = (
         setConnectionError(null);
         onOpen?.();
 
-        // Auto-subscribe to unconfirmed transactions for Blockchain API
         if (url.includes("blockchain.info")) {
           ws.send(JSON.stringify({ op: "unconfirmed_sub" }));
         }
@@ -71,7 +70,6 @@ export const useWebSocketConnection = (
 
   const disconnect = useCallback(() => {
     if (wsRef.current) {
-      // Unsubscribe from unconfirmed transactions for Blockchain API
       if (url.includes("blockchain.info")) {
         wsRef.current.send(JSON.stringify({ op: "unconfirmed_unsub" }));
       }
@@ -88,7 +86,6 @@ export const useWebSocketConnection = (
     }
   }, []);
 
-  // Connection management effect
   useEffect(() => {
     if (enabled) {
       connect();

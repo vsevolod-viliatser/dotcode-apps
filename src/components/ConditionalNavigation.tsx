@@ -6,7 +6,6 @@ import Navigation from "./Navigation";
 export default function ConditionalNavigation() {
   const pathname = usePathname();
 
-  // Не показывать навигацию на главной странице
   if (pathname === "/") {
     return null;
   }

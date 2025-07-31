@@ -28,9 +28,6 @@ const HomePage: React.FC = () => {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Welcome to DotCode Apps
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            A modern Single Page Application with lazy-loaded sections
-          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -47,13 +44,6 @@ const HomePage: React.FC = () => {
               </div>
             </Link>
           ))}
-        </div>
-
-        <div className="text-center mt-16">
-          <p className="text-gray-500">
-            Each section is lazy-loaded and has its own unique URL for optimal
-            performance.
-          </p>
         </div>
       </main>
     </div>
